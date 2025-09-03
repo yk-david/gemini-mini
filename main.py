@@ -13,6 +13,7 @@ def main():
     api_key = os.environ.get('GEMINI_API_KEY')
 
     client = genai.Client(api_key=api_key)
+    
     user_prompt = sys.argv[1]
 
     messages = [
@@ -27,8 +28,11 @@ def main():
     usage_metadata = response.usage_metadata
 
     print(response.text)
-    print(f'Prompt tokens: {usage_metadata.prompt_token_count}')
-    print(f'Response tokens: {usage_metadata.candidates_token_count}')
+
+    if '--verbose' in sys.argv[1:]:
+        print(f'User prompt: {user_prompt}')
+        print(f'Prompt tokens: {usage_metadata.prompt_token_count}')
+        print(f'Response tokens: {usage_metadata.candidates_token_count}')
 
 
 if __name__ == "__main__":

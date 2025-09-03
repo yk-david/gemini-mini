@@ -15,4 +15,17 @@ def get_files_info(working_directory, directory='.'):
             f'- {item}: file_size={os.path.getsize(os.path.join(full_path, item))} bytes, is_dir={os.path.isdir(os.path.join(full_path, item))}'
         )
     
-    return '\n'.join(item_description)
+    try:
+        if item_description:
+            return f'Result for {directory} directory:\n{'\n'.join(item_description)}'
+    except:
+        Exception("There isn't item in the directory")
+
+# item_description = []
+    
+# for item in os.listdir(os.getcwd()):
+#     item_description.append(
+#         f'- {item}: file_size={os.path.getsize(os.path.join(os.getcwd(), item))} bytes, is_dir={os.path.isdir(os.path.join(os.path.join(os.getcwd()), item))}'
+#     )
+
+# print('\n'.join(item_description))

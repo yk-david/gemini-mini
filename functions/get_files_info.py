@@ -2,8 +2,9 @@ import os
 
 def get_files_info(working_directory, directory='.'):
     full_path = os.path.join(working_directory, directory)
+    abs_working_directory = os.path.abspath(working_directory)
 
-    if not os.path.abspath(full_path).startswith(directory):
+    if not os.path.abspath(full_path).startswith(abs_working_directory):
         return f'Error: Cannot list "{directory}" as it is outside the permitted working directory' # There still could be `directory` inside other directory than `working_directory`, but it would mean it's not permitted.
     if not os.path.isdir(full_path):
         return f'Error: "{directory}" is not a directory'
@@ -17,15 +18,7 @@ def get_files_info(working_directory, directory='.'):
     
     try:
         if item_description:
-            return f'Result for {directory} directory:\n{'\n'.join(item_description)}'
+            return f'Result for "{directory}" directory:\n{'\n'.join(item_description)}'
     except:
         Exception("There isn't item in the directory")
 
-# item_description = []
-    
-# for item in os.listdir(os.getcwd()):
-#     item_description.append(
-#         f'- {item}: file_size={os.path.getsize(os.path.join(os.getcwd(), item))} bytes, is_dir={os.path.isdir(os.path.join(os.path.join(os.getcwd()), item))}'
-#     )
-
-# print('\n'.join(item_description))

@@ -3,7 +3,7 @@ import sys
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
-from call_function import available_functions
+from available_functions import available_functions
 from prompts import system_prompt
 
 def main():

@@ -4,6 +4,7 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 from functions.get_files_info import schema_get_files_info
+from functions.get_file_content import schema_get_file_content
 
 def main():
     if not len(sys.argv) > 1:
@@ -31,7 +32,8 @@ def main():
 
     available_functions = types.Tool(
         function_declarations=[
-            schema_get_files_info
+            schema_get_files_info, 
+            schema_get_file_content
         ]
     )
 
@@ -46,10 +48,12 @@ def main():
 
     usage_metadata = response.usage_metadata
 
-    # print(response.text)
-    if response.function_calls:
-        for function_call in response.function_calls:
-            print(f'Calling function: {function_call.name}({function_call.args})')
+    if not response.function_calls:
+        print(response.text)
+        return
+    
+    for function_call in response.function_calls:
+        print(f'Calling function: {function_call.name}({function_call.args})')
 
 
 

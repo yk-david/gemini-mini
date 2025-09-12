@@ -5,6 +5,7 @@ from google.genai import types
 from dotenv import load_dotenv
 from available_functions import available_functions
 from prompts import system_prompt
+from functions.call_function import call_function
 
 def main():
     if not len(sys.argv) > 1:

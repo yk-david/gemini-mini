@@ -1,4 +1,5 @@
 from google.genai import types
+
 from functions.get_file_content import get_file_content
 from functions.get_files_info import get_files_info
 from functions.run_python_file import run_python_file
@@ -58,17 +59,3 @@ def call_function(function_call_part, verbose=False):
         )
 
 
-# # Saniti check
-# class StubFunctionCall:
-#     def __init__(self, name, args=None):
-#         self.name = name
-#         self.args = args or {}
-    
-# fake_call = StubFunctionCall('not_a_real_function', {'path': 'foo.txt'})
-# content = call_function(fake_call, verbose=True)
-
-# print(type(content), content.role)
-# print(len(content.parts))
-# part = content.parts[0]
-# print(part.function_response.name)
-# print(part.function_response.response)

@@ -8,6 +8,8 @@ from prompts import system_prompt
 from functions.call_function import call_function
 
 def main():
+    verbose = '--verbose' in sys.argv
+
     if not len(sys.argv) > 1:
         print('You should provide input.')
         return sys.exit(1)
@@ -31,21 +33,27 @@ def main():
         )
     )
 
+
     usage_metadata = response.usage_metadata
-
-    if not response.function_calls:
-        print(response.text)
-        return
-    
-    for function_call in response.function_calls:
-        print(f'Calling function: {function_call.name}({function_call.args})')
-
-
 
     if '--verbose' in sys.argv[1:]:
         print(f'User prompt: {user_prompt}')
         print(f'Prompt tokens: {usage_metadata.prompt_token_count}')
         print(f'Response tokens: {usage_metadata.candidates_token_count}')
+
+    if not response.function_calls:
+        print(response.text)
+        return
+    
+    for function_call_part in response.function_calls:
+        function_call_result = call_function(function_call_part, verbose)
+        if not function_call_result.parts or not function_call_result.parts[0].function_response:
+            raise Exception('empty function call result')
+        if verbose:
+            print(f'-> {function_call_result.parts[0].function_response.response}')
+
+
+    
 
 
 if __name__ == "__main__":

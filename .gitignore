@@ -11,6 +11,3 @@ wheels/
 
 # Environment Variable
 .env
-
-# Etc.
-GEMINI.md
